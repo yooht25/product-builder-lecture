@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>로또 번호 뽑기</title>
+  <script>
+    try {
+      if (localStorage.getItem('lotto-theme') === 'dark') {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    } catch (_) { /* 저장이 제한되어도 화면을 표시합니다. */ }
+  </script>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 28px 16px; background: #eff3ed; color: #18342c; font-family: "Malgun Gothic", sans-serif; }
@@ -25,10 +32,31 @@
     .yellow { background: #9a6a00; } .blue { background: #2677ad; } .red { background: #c34d48; } .gray { background: #697077; } .green { background: #40804a; }
     footer { margin-top: 26px; padding-top: 18px; border-top: 1px solid #e5e9df; font-size: 12px; line-height: 1.8; color: #69746c; }
     @media (max-width: 480px) { main { padding: 28px 16px; } .row { padding: 14px 10px; gap: 8px; } .balls { gap: 5px; } .ball { width: clamp(28px, 8.2vw, 38px); height: clamp(28px, 8.2vw, 38px); font-size: 15px; } .label { font-size: 12px; } }
+    :root { color-scheme: light; }
+    :root[data-theme="dark"] { color-scheme: dark; }
+    [data-theme="dark"] body { background: #111a16; color: #edf5ef; }
+    [data-theme="dark"] main { background: #1c2922; border-color: #3b5143; }
+    [data-theme="dark"] .tag, [data-theme="dark"] .label { color: #b9d6c1; }
+    [data-theme="dark"] .intro, [data-theme="dark"] #status,
+    [data-theme="dark"] .empty, [data-theme="dark"] footer { color: #bdcbbf; }
+    [data-theme="dark"] .row { background: #2b3b30; }
+    [data-theme="dark"] .empty, [data-theme="dark"] footer { border-color: #48604e; }
+    [data-theme="dark"] #generate { background: #367655; }
+    [data-theme="dark"] #generate:hover { background: #408b65; }
+    .theme-picker { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 24px; }
+    .theme-picker button { width: auto; min-height: 44px; margin: 0; padding: 10px 14px; border: 1px solid #ccd8cb; border-radius: 10px; background: transparent; color: inherit; font-size: 14px; }
+    .theme-picker button[aria-pressed="true"] { background: #245c45; border-color: #245c45; color: #fff; }
+    .theme-picker button:hover { border-color: #245c45; box-shadow: 0 0 0 1px #245c45; }
+    [data-theme="dark"] .theme-picker button { border-color: #64806d; }
+    [data-theme="dark"] .theme-picker button[aria-pressed="true"] { background: #b9dfc5; border-color: #b9dfc5; color: #142c1d; }
   </style>
 </head>
 <body>
   <main>
+    <div class="theme-picker" role="group" aria-label="화면 모드 선택">
+      <button type="button" data-mode="light" aria-pressed="true">화이트 모드</button>
+      <button type="button" data-mode="dark" aria-pressed="false">다크 모드</button>
+    </div>
     <p class="tag">LOTTO 6 / 45</p>
     <h1>오늘의 로또 번호</h1>
     <p class="intro">버튼 한 번으로 추천 번호 5세트를 뽑아보세요.<br>각 세트마다 1~45 중 서로 다른 숫자 6개를 담습니다.</p>
@@ -40,6 +68,21 @@
     <footer>번호는 무작위로 생성되며 당첨을 예측하거나 보장하지 않습니다.<br>한 세트 안에서는 숫자가 중복되지 않으며, 서로 다른 세트 사이에는 같은 숫자가 나올 수 있습니다.</footer>
   </main>
   <script>
+    const themeButtons = document.querySelectorAll('[data-mode]');
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      themeButtons.forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.mode === theme));
+      });
+    }
+    applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+    themeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const theme = button.dataset.mode;
+        applyTheme(theme);
+        try { localStorage.setItem('lotto-theme', theme); } catch (_) { /* 현재 화면의 전환은 유지합니다. */ }
+      });
+    });
     function randomBelow(max) {
       const buffer = new Uint32Array(1);
       const limit = 4294967296 - (4294967296 % max);
