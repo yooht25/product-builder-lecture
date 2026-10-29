@@ -9,46 +9,63 @@
       if (localStorage.getItem('lotto-theme') === 'dark') {
         document.documentElement.dataset.theme = 'dark';
       }
+      const size = localStorage.getItem('lotto-font-size');
+      if (['1', '2', '3', '4', '5'].includes(size)) document.documentElement.dataset.fontSize = size;
     } catch (_) { /* 저장이 제한되어도 화면을 표시합니다. */ }
   </script>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 28px 16px; background: #eff3ed; color: #18342c; font-family: "Malgun Gothic", sans-serif; }
-    main { width: 100%; max-width: 660px; padding: 40px 32px; border: 1px solid #dce5da; border-radius: 28px; background: #fffefa; box-shadow: 0 16px 60px #18342c0d; }
-    .tag { margin: 0 0 16px; font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #53705d; }
-    h1 { margin: 0 0 14px; font-size: clamp(28px, 6vw, 40px); letter-spacing: -2px; }
-    .intro { margin: 0; color: #5d6b63; font-size: 15px; line-height: 1.8; }
-    button { width: 100%; min-height: 88px; margin: 26px 0 12px; padding: 24px 16px; border: 0; border-radius: 14px; background: #245c45; color: white; font: inherit; font-size: clamp(22px, 5.5vw, 28px); line-height: 1.4; font-weight: bold; cursor: pointer; }
-    button:hover { background: #194632; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 28px 16px; background: #edf5ff; color: #17345c; font-family: "Malgun Gothic", sans-serif; }
+    main { width: 100%; max-width: 660px; padding: 40px 32px; border: 1px solid #cfdef2; border-radius: 28px; background: #ffffff; box-shadow: 0 16px 60px #17345c0d; }
+    .tag { margin: 0 0 16px; font-size: 0.8125rem; font-weight: 700; letter-spacing: 2px; color: #416b9c; }
+    h1 { margin: 0 0 14px; font-size: clamp(1.75rem, 6vw, 2.5rem); letter-spacing: -2px; }
+    .intro { margin: 0; color: #506783; font-size: 0.9375rem; line-height: 1.8; }
+    button { width: 100%; min-height: 88px; margin: 26px 0 12px; padding: 24px 16px; border: 0; border-radius: 14px; background: #245fbe; color: white; font: inherit; font-size: clamp(1.375rem, 5.5vw, 1.75rem); line-height: 1.4; font-weight: bold; cursor: pointer; }
+    button:hover { background: #194991; }
     button:active { transform: translateY(1px); }
     button:focus-visible { outline: 3px solid #c58b13; outline-offset: 4px; }
-    #status { min-height: 22px; margin: 0 0 16px; text-align: center; color: #5d6b63; font-size: 13px; }
+    #status { min-height: 22px; margin: 0 0 16px; text-align: center; color: #506783; font-size: 0.8125rem; }
     #results { display: grid; gap: 10px; }
-    .empty { padding: 32px 12px; border: 1px dashed #ccd8cb; border-radius: 14px; text-align: center; line-height: 1.8; color: #67756c; }
-    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 14px; background: #f3f5ef; border-radius: 14px; }
-    .label { font-size: 13px; white-space: nowrap; font-weight: bold; color: #526557; }
+    .empty { padding: 32px 12px; border: 1px dashed #bdd0e9; border-radius: 14px; text-align: center; line-height: 1.8; color: #526b8b; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 14px; background: #eaf2fd; border-radius: 14px; }
+    .label { font-size: 0.8125rem; white-space: nowrap; font-weight: bold; color: #42638c; }
     .balls { display: flex; gap: 9px; }
-    .ball { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; color: #fff; font-size: 18px; font-weight: bold; box-shadow: inset 0 -3px 0 #00000014; }
-    .yellow { background: #9a6a00; } .blue { background: #2677ad; } .red { background: #c34d48; } .gray { background: #697077; } .green { background: #40804a; }
-    footer { margin-top: 26px; padding-top: 18px; border-top: 1px solid #e5e9df; font-size: 12px; line-height: 1.8; color: #69746c; }
-    @media (max-width: 480px) { main { padding: 28px 16px; } .row { padding: 14px 10px; gap: 8px; } .balls { gap: 5px; } .ball { width: clamp(28px, 8.2vw, 38px); height: clamp(28px, 8.2vw, 38px); font-size: 15px; } .label { font-size: 12px; } }
-    :root { color-scheme: light; }
+    .ball { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; color: #fff; font-size: 1.125rem; font-weight: bold; box-shadow: inset 0 -3px 0 #00000014; }
+    .yellow { background: #245f9e; } .blue { background: #176b91; } .red { background: #3658ad; } .gray { background: #486580; } .green { background: #285385; }
+    footer { margin-top: 26px; padding-top: 18px; border-top: 1px solid #d7e4f5; font-size: 0.75rem; line-height: 1.8; color: #526783; }
+    @media (max-width: 480px) { main { padding: 28px 16px; } .row { padding: 14px 10px; gap: 8px; } .balls { gap: 5px; } .ball { width: clamp(28px, 8.2vw, 38px); height: clamp(28px, 8.2vw, 38px); font-size: 0.9375rem; } .label { font-size: 0.75rem; } }
+    :root { color-scheme: light; font-size: 16px; }
+    :root[data-font-size="1"] { font-size: 14px; }
+    :root[data-font-size="2"] { font-size: 16px; }
+    :root[data-font-size="3"] { font-size: 18px; }
+    :root[data-font-size="4"] { font-size: 20px; }
+    :root[data-font-size="5"] { font-size: 22px; }
     :root[data-theme="dark"] { color-scheme: dark; }
-    [data-theme="dark"] body { background: #111a16; color: #edf5ef; }
-    [data-theme="dark"] main { background: #1c2922; border-color: #3b5143; }
-    [data-theme="dark"] .tag, [data-theme="dark"] .label { color: #b9d6c1; }
+    [data-theme="dark"] body { background: #0d1729; color: #edf4ff; }
+    [data-theme="dark"] main { background: #17263e; border-color: #354f73; }
+    [data-theme="dark"] .tag, [data-theme="dark"] .label { color: #b5d4ff; }
     [data-theme="dark"] .intro, [data-theme="dark"] #status,
-    [data-theme="dark"] .empty, [data-theme="dark"] footer { color: #bdcbbf; }
-    [data-theme="dark"] .row { background: #2b3b30; }
-    [data-theme="dark"] .empty, [data-theme="dark"] footer { border-color: #48604e; }
-    [data-theme="dark"] #generate { background: #367655; }
-    [data-theme="dark"] #generate:hover { background: #408b65; }
+    [data-theme="dark"] .empty, [data-theme="dark"] footer { color: #bdcde3; }
+    [data-theme="dark"] .row { background: #223754; }
+    [data-theme="dark"] .empty, [data-theme="dark"] footer { border-color: #47638a; }
+    [data-theme="dark"] #generate { background: #2865bb; }
+    [data-theme="dark"] #generate:hover { background: #3276d4; }
     .theme-picker { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 24px; }
-    .theme-picker button { width: auto; min-height: 44px; margin: 0; padding: 10px 14px; border: 1px solid #ccd8cb; border-radius: 10px; background: transparent; color: inherit; font-size: 14px; }
-    .theme-picker button[aria-pressed="true"] { background: #245c45; border-color: #245c45; color: #fff; }
-    .theme-picker button:hover { border-color: #245c45; box-shadow: 0 0 0 1px #245c45; }
-    [data-theme="dark"] .theme-picker button { border-color: #64806d; }
-    [data-theme="dark"] .theme-picker button[aria-pressed="true"] { background: #b9dfc5; border-color: #b9dfc5; color: #142c1d; }
+    .theme-picker button { width: auto; min-height: 44px; margin: 0; padding: 10px 14px; border: 1px solid #bdd0e9; border-radius: 10px; background: transparent; color: inherit; font-size: 0.875rem; }
+    .theme-picker button[aria-pressed="true"] { background: #245fbe; border-color: #245fbe; color: #fff; }
+    .theme-picker button:hover { border-color: #245fbe; box-shadow: 0 0 0 1px #245fbe; }
+    [data-theme="dark"] .theme-picker button { border-color: #6486b3; }
+    [data-theme="dark"] .theme-picker button[aria-pressed="true"] { background: #b6d6ff; border-color: #b6d6ff; color: #102c50; }
+    body { font-size: 1rem; }
+    .theme-picker { flex-wrap: wrap; }
+    .size-picker { margin: 0 0 26px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.875rem; }
+    .size-picker select { max-width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #6486b3; border-radius: 10px; background: #fff; color: #17345c; font: inherit; }
+    .size-picker select:focus-visible { outline: 3px solid #c58b13; outline-offset: 3px; }
+    [data-theme="dark"] .size-picker select { background: #223754; color: #edf4ff; }
+    .row { flex-wrap: wrap; }
+    .balls { flex-wrap: wrap; }
+    .ball { flex-shrink: 0; width: 2.875rem; height: 2.875rem; }
+    @media (max-width: 480px) { .ball { width: 2.25rem; height: 2.25rem; } }
   </style>
 </head>
 <body>
@@ -56,6 +73,16 @@
     <div class="theme-picker" role="group" aria-label="화면 모드 선택">
       <button type="button" data-mode="light" aria-pressed="true">화이트 모드</button>
       <button type="button" data-mode="dark" aria-pressed="false">다크 모드</button>
+    </div>
+    <div class="size-picker">
+      <label for="font-size">글자 크기</label>
+      <select id="font-size">
+        <option value="1">1단계 · 작게</option>
+        <option value="2" selected>2단계 · 기본</option>
+        <option value="3">3단계 · 크게</option>
+        <option value="4">4단계 · 더 크게</option>
+        <option value="5">5단계 · 가장 크게</option>
+      </select>
     </div>
     <p class="tag">LOTTO 6 / 45</p>
     <h1>오늘의 로또 번호</h1>
@@ -68,6 +95,14 @@
     <footer>번호는 무작위로 생성되며 당첨을 예측하거나 보장하지 않습니다.<br>한 세트 안에서는 숫자가 중복되지 않으며, 서로 다른 세트 사이에는 같은 숫자가 나올 수 있습니다.</footer>
   </main>
   <script>
+    const fontSizeSelect = document.getElementById('font-size');
+    fontSizeSelect.value = document.documentElement.dataset.fontSize || '2';
+    fontSizeSelect.addEventListener('change', () => {
+      const size = fontSizeSelect.value;
+      if (!['1', '2', '3', '4', '5'].includes(size)) return;
+      document.documentElement.dataset.fontSize = size;
+      try { localStorage.setItem('lotto-font-size', size); } catch (_) { /* 저장이 제한되어도 크기는 변경합니다. */ }
+    });
     const themeButtons = document.querySelectorAll('[data-mode]');
     function applyTheme(theme) {
       document.documentElement.dataset.theme = theme;
